@@ -1,0 +1,48 @@
+JUST PRINT - PAGINA WEB
+=======================
+
+VER LA PAGINA
+  Doble clic en  ver-pagina.bat   (abre http://localhost:8080)
+
+DONDE EDITAR (todo esta separado para que sea facil)
+  assets/js/config.js     Telefono, correo, horario, direccion, mapa, redes
+                          sociales y las 10 preguntas frecuentes.
+  data/services.json      Los 12 servicios (textos, listas, colores).
+                          Despues de editarlo, doble clic en  construir.bat
+                          para regenerar las paginas de cada servicio.
+  assets/img/             Fotos y logos.
+
+GALERIA "NUESTRO TRABAJO", CLIENTES Y TESTIMONIOS  (todo en config.js)
+  GALLERY        Las fotos que se deslizan de lado. Para agregar tus propias
+                 fotos: subelas a assets/img/ y agrega una linea.
+  CLIENTS        Logos o nombres de clientes. Vacio = la seccion no aparece.
+  TESTIMONIALS   Testimonios. Vacio = la seccion no aparece.
+  assets/catalogo-*.pdf   Catalogo (completo 3.5 MB y ligero 1.6 MB).
+
+REDES SOCIALES
+  Estan como iconos sin enlace. Pega el enlace en config.js (SOCIAL) y el
+  icono se vuelve un boton real.
+
+DOMINIO / SEO
+  build.py tiene DOMAIN = https://justprinthn.com (para sitemap y Google).
+  Si el dominio final es otro, cambialo ahi y corre construir.bat.
+
+HTTPS (CANDADO)
+  Certificado gratuito de Let's Encrypt (emitido con certbot) instalado en
+  GoDaddy para justprinthn.com y www.justprinthn.com.
+  VENCE EL 19 DE DICIEMBRE DE 2026 (dura 90 dias). Hay que renovarlo antes
+  (por ejemplo, a inicios de diciembre). El .htaccess ya redirige HTTP a HTTPS.
+  Renovacion: pedir nuevo certificado con certbot (verificacion HTTP-01 con un
+  archivo en public_html/.well-known/acme-challenge/) e instalarlo en cPanel >
+  SSL/TLS > Manage SSL Hosts.
+
+SUBIRLA A GODADDY (cuando tengamos acceso)
+  Subir TODO el contenido de esta carpeta a public_html, EXCEPTO:
+    build.py, construir.bat, ver-pagina.bat, data/, LEEME.txt,
+    JP.PNG y el PDF original de la raiz.
+  Incluir el archivo oculto .htaccess.
+
+NOTAS
+  - Los datos de contacto actuales son EJEMPLOS.
+  - El formulario abre el correo del visitante (mailto). Cuando tengamos el
+    hosting se puede cambiar a envio directo desde el servidor.

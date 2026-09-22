@@ -1,0 +1,19 @@
+# Archivo original pesado (25 MB) — no se usa en el sitio publicado.
+# Se excluye por posición (no por nombre): evita problemas de acentos con
+# distintas codificaciones Unicode de Windows (NFC vs NFD).
+/*.pdf
+JP.PNG
+
+# Catálogos en PDF: ya no se descargan desde la página (se pide por teléfono/correo)
+assets/catalogo-just-print-2026.pdf
+assets/catalogo-just-print-2026-ligero.pdf
+
+# Configuración local de vista previa (Claude Code)
+.claude/
+
+# Notas de la renovación SSL manual en GoDaddy (ya no aplica: GitHub Pages da HTTPS automático)
+ssl-renovacion/
+
+# Sistema
+.DS_Store
+Thumbs.db
