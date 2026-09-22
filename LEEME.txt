@@ -64,3 +64,12 @@ NOTAS
     usando igual desde "Mis productos", no hace falta esa direccion.
   - El sitio viejo sigue de respaldo en el hosting de GoDaddy
     (respaldo_sitio_anterior/) por si algun dia se necesita algo de ahi.
+    Ahi mismo tambien quedaron archivos sueltos de cuando se probo HTTPS
+    con certbot (ya no se usan): se limpiaran cuando se pueda entrar de
+    nuevo al panel (a veces el codigo de verificacion de GoDaddy falla).
+
+CARPETA DEL PROYECTO (22-sep-2026): se elimino todo lo que ya no se usaba:
+  el PDF original de 25 MB, el logo JP.PNG sin recortar, los catalogos en
+  PDF de la carpeta assets (ya no se descargan), el .htaccess (era para
+  Apache/GoDaddy, GitHub Pages no lo usa) y la carpeta ssl-renovacion/
+  (renovacion manual de HTTPS, ya no aplica). Nada de eso se necesita.
