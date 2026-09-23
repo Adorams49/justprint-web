@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=202609221739">
+  <link rel="stylesheet" href="assets/css/style.css?v=202609231858">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Just Print","url":"https://justprinthn.com/","logo":"https://justprinthn.com/assets/img/logo.png","slogan":"Expertos en lo que hacemos","description":"Diseño, impresión e instalación a nivel nacional en Honduras.","areaServed":{"@type":"Country","name":"Honduras"}}
   </script>
@@ -131,43 +131,49 @@
   </div>
 </section>
 
-<!-- ============ PROCESO (pinned) ============ -->
-<section class="pin" id="proceso" data-pin>
-  <div class="pin__stage">
-    <div class="wrap pin__inner">
-      <div class="pin__text">
-        <p class="eyebrow eyebrow--light">Cómo trabajamos</p>
-        <h2 class="h2 h2--light">De la idea<br>a la pared.</h2>
-        <ol class="steps">
-          <li class="step is-active" data-step>
-            <span class="step__n">01</span>
-            <div>
-              <h3>Diseño</h3>
-              <p>Nuestro departamento de diseño, con años de experiencia, trabaja con creatividad, dinamismo y profesionalismo para llevar tu marca al siguiente nivel.</p>
-            </div>
-          </li>
-          <li class="step" data-step>
-            <span class="step__n">02</span>
-            <div>
-              <h3>Impresión</h3>
-              <p>Equipos de alta calidad para pequeño y gran formato, offset y centro de copiado láser. Un servicio sin limitaciones.</p>
-            </div>
-          </li>
-          <li class="step" data-step>
-            <span class="step__n">03</span>
-            <div>
-              <h3>Instalación</h3>
-              <p>El mejor equipo en producción y acabados, con amplia experiencia y servicio a nivel nacional.</p>
-            </div>
-          </li>
-        </ol>
-        <div class="pin__bar"><span data-pin-bar></span></div>
+<!-- ============ PROCESO (pasos con flechas) ============ -->
+<section class="process" id="proceso">
+  <div class="wrap process__inner">
+    <div class="process__text">
+      <p class="eyebrow eyebrow--light reveal">Cómo trabajamos</p>
+      <h2 class="h2 h2--light reveal" style="--d:.06s">De la idea<br>a la pared.</h2>
+      <ol class="steps reveal" style="--d:.12s">
+        <li class="step is-active" data-step>
+          <span class="step__n">01</span>
+          <div>
+            <h3>Diseño</h3>
+            <p>Nuestro departamento de diseño, con años de experiencia, trabaja con creatividad, dinamismo y profesionalismo para llevar tu marca al siguiente nivel.</p>
+          </div>
+        </li>
+        <li class="step" data-step>
+          <span class="step__n">02</span>
+          <div>
+            <h3>Impresión</h3>
+            <p>Equipos de alta calidad para pequeño y gran formato, offset y centro de copiado láser. Un servicio sin limitaciones.</p>
+          </div>
+        </li>
+        <li class="step" data-step>
+          <span class="step__n">03</span>
+          <div>
+            <h3>Instalación</h3>
+            <p>El mejor equipo en producción y acabados, con amplia experiencia y servicio a nivel nacional.</p>
+          </div>
+        </li>
+      </ol>
+      <div class="process__nav reveal" style="--d:.18s">
+        <button class="process__arrow" type="button" data-step-prev aria-label="Paso anterior">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <span class="process__count" aria-live="polite"><b data-step-count>01</b> / 03</span>
+        <button class="process__arrow" type="button" data-step-next aria-label="Paso siguiente">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
       </div>
-      <div class="pin__media">
-        <img class="is-active" data-pin-img src="assets/img/story-design.webp" alt="Equipo de diseño trabajando en una propuesta gráfica" loading="lazy">
-        <img data-pin-img src="assets/img/c-granformato.webp" alt="Impresión de gran formato" loading="lazy">
-        <img data-pin-img src="assets/img/c-letras.webp" alt="Letras encajueladas con luz instaladas" loading="lazy">
-      </div>
+    </div>
+    <div class="process__media reveal reveal--scale" style="--d:.1s">
+      <img class="is-active" data-step-img src="assets/img/story-design.webp" alt="Equipo de diseño trabajando en una propuesta gráfica" loading="lazy">
+      <img data-step-img src="assets/img/c-granformato.webp" alt="Impresión de gran formato" loading="lazy">
+      <img data-step-img src="assets/img/c-letras.webp" alt="Letras encajueladas con luz instaladas" loading="lazy">
     </div>
   </div>
 </section>
@@ -325,36 +331,37 @@
       <h2 class="h2 reveal" style="--d:.06s">Hablemos de<br>tu proyecto.</h2>
       <p class="lead reveal" style="--d:.12s">Cuéntanos qué necesitas y te respondemos con una cotización.</p>
       <ul class="contact__list reveal" style="--d:.18s" id="contactList"></ul>
-      <div class="socials socials--lg reveal" style="--d:.22s" data-socials aria-label="Redes sociales"></div>
     </div>
 
-    <div class="form reveal" style="--d:.1s">
-      <p class="eyebrow">Cotiza tu proyecto</p>
-      <h3 class="form__cta-title">Escríbenos directamente</h3>
-      <p class="form__hint">Cuéntanos qué necesitas por llamada o correo y te respondemos con una cotización.</p>
-      <div class="form__actions form__actions--col">
-        <a class="btn btn--blue" href="tel:+50433924640">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Llamar · +504 3392-4640
-        </a>
-        <a class="btn btn--outline" href="mailto:jfigueroa@justprinthn.com">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
-          Escribir correo
-        </a>
+    <div class="contact__aside">
+      <div class="form reveal" style="--d:.1s">
+        <p class="eyebrow">Cotiza tu proyecto</p>
+        <h3 class="form__cta-title">Escríbenos directamente</h3>
+        <p class="form__hint">Cuéntanos qué necesitas por llamada o correo y te respondemos con una cotización.</p>
+        <div class="form__actions form__actions--col">
+          <a class="btn btn--blue" href="tel:+50433924640">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Llamar · +504 3392-4640
+          </a>
+          <a class="btn btn--outline" href="mailto:jfigueroa@justprinthn.com">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+            Escribir correo
+          </a>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Ubicación -->
-  <div class="wrap map reveal" id="ubicacion">
-    <div class="map__frame">
-      <iframe id="mapFrame" title="Ubicación de Just Print en Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-    </div>
-    <div class="map__card">
-      <p class="eyebrow">Visítanos</p>
-      <h3>Nuestra ubicación</h3>
-      <p id="mapAddress"></p>
-      <a class="btn btn--blue btn--sm" id="mapLink" href="#" target="_blank" rel="noopener">Cómo llegar</a>
+      <!-- Ubicación -->
+      <div class="map reveal" id="ubicacion" style="--d:.16s">
+        <div class="map__frame">
+          <iframe id="mapFrame" title="Ubicación de Just Print en Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        <div class="map__card">
+          <p class="eyebrow">Visítanos</p>
+          <h3>Nuestra ubicación</h3>
+          <p id="mapAddress"></p>
+          <a class="btn btn--blue btn--sm" id="mapLink" href="#" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -427,9 +434,9 @@
   </article>
 </div>
 
-<script src="assets/js/config.js?v=202609221739"></script>
-<script src="assets/js/data.js?v=202609221739"></script>
-<script src="assets/js/common.js?v=202609221739"></script>
-<script src="assets/js/home.js?v=202609221739"></script>
+<script src="assets/js/config.js?v=202609231858"></script>
+<script src="assets/js/data.js?v=202609231858"></script>
+<script src="assets/js/common.js?v=202609231858"></script>
+<script src="assets/js/home.js?v=202609231858"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ Lee data/services.json y genera:
   · 404.html, sitemap.xml, robots.txt
   · el menú y el pie de página de index.html (entre las marcas <!--build:...-->)
 
-Uso:  python build.py      (o doble clic en construir.bat)
+Uso:  python build.py      (o doble clic en build.bat)
 Después de editar data/services.json, vuelve a correrlo.
 """
 import html

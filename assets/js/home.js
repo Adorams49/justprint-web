@@ -192,15 +192,11 @@ if (words) {
 const hero = $("[data-hero]");
 const heroFrame = $("[data-hero-frame]");
 const statement = $("[data-statement]");
-const pin = $("[data-pin]");
-const steps = $$("[data-step]");
-const pinImgs = $$("[data-pin-img]");
-const pinBar = $("[data-pin-bar]");
 const catalog = $("[data-catalog]");
 const about = $(".about");
 const sections = ["servicios", "proceso", "porque", "trabajo", "nosotros", "catalogo", "preguntas", "contacto"].map(id => [id, document.getElementById(id)]);
 const navAnchors = $$(".nav__links a");
-let activeStep = -1, ticking = false;
+let ticking = false;
 
 function update() {
   ticking = false;
@@ -228,18 +224,6 @@ function update() {
     }
   }
 
-  if (pin) {
-    const r = pin.getBoundingClientRect();
-    const p = clamp(-r.top / (pin.offsetHeight - vh));
-    pinBar.style.setProperty("--pp", p.toFixed(4));
-    const idx = Math.min(steps.length - 1, Math.floor(p * steps.length * .999));
-    if (idx !== activeStep) {
-      activeStep = idx;
-      steps.forEach((s, i) => s.classList.toggle("is-active", i === idx));
-      pinImgs.forEach((im, i) => im.classList.toggle("is-active", i === idx));
-    }
-  }
-
   let current = "";
   sections.forEach(([id, el]) => { if (el && el.getBoundingClientRect().top <= vh * .4) current = id; });
   navAnchors.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === "#" + current));
@@ -248,6 +232,24 @@ function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(upda
 window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("resize", onScroll);
 update();
+
+/* ---------- proceso: pasos con flechas (o tocando cada paso) ---------- */
+(function processSteps() {
+  const steps = $$("[data-step]");
+  const imgs = $$("[data-step-img]");
+  const count = $("[data-step-count]");
+  if (!steps.length) return;
+  let cur = 0;
+  function go(i) {
+    cur = (i + steps.length) % steps.length;
+    steps.forEach((s, k) => s.classList.toggle("is-active", k === cur));
+    imgs.forEach((im, k) => im.classList.toggle("is-active", k === cur));
+    if (count) count.textContent = String(cur + 1).padStart(2, "0");
+  }
+  $("[data-step-prev]").addEventListener("click", () => go(cur - 1));
+  $("[data-step-next]").addEventListener("click", () => go(cur + 1));
+  steps.forEach((s, k) => s.addEventListener("click", () => go(k)));
+})();
 
 /* ---------- preguntas frecuentes ---------- */
 (function faq() {

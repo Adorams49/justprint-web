@@ -12,18 +12,16 @@ const CONFIG = {
 
   // Ubicación (el mapa ya apunta a tu enlace de Google Maps)
   address: "Col. Universidad, 20 calle A, 8 avenida, San Pedro Sula, Honduras",
-  mapsLink: "https://maps.app.goo.gl/jjNavdi2CWdcwCz57",
-  mapsLat: 15.525793,
-  mapsLng: -88.026914
+  mapsLink: "",
+  mapsLat: 15.525042511167925,
+  mapsLng: -88.02513127849124
 };
 
-/* Redes sociales: por ahora vacías (los íconos se ven pero no llevan a ningún lado).
-   Pega el enlace completo y el ícono pasa a ser un botón real. */
+/* Redes sociales (salen en el pie de página). Si dejas un enlace vacío (""),
+   el ícono se ve pero no lleva a ningún lado. */
 const SOCIAL = {
-  facebook: "",
-  instagram: "",
-  tiktok: "",
-  youtube: ""
+  facebook: "https://www.facebook.com/justprinthn/",
+  instagram: "https://www.instagram.com/justprint.hn/"
 };
 
 /* Preguntas frecuentes: 10 EJEMPLOS. Reemplaza las respuestas por las reales. */

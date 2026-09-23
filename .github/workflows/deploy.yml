@@ -28,7 +28,7 @@ jobs:
         run: python build.py
 
       # Solo se publica lo necesario para el sitio: build.py, data/, *.bat y
-      # LEEME.txt se quedan en el repositorio pero nunca quedan públicos.
+      # README.md se quedan en el repositorio pero nunca quedan públicos.
       - name: Preparar carpeta a publicar
         run: |
           mkdir publish
