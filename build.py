@@ -129,7 +129,10 @@ def scripts_html(prefix):
     return (
         f'<script src="{prefix}assets/js/config.js?v={BUILD}"></script>\n'
         f'<script src="{prefix}assets/js/data.js?v={BUILD}"></script>\n'
-        f'<script src="{prefix}assets/js/common.js?v={BUILD}"></script>'
+        f'<script src="{prefix}assets/js/common.js?v={BUILD}"></script>\n'
+        f'<script src="{prefix}assets/vendor/gsap/gsap.min.js"></script>\n'
+        f'<script src="{prefix}assets/vendor/gsap/ScrollTrigger.min.js"></script>\n'
+        f'<script src="{prefix}assets/js/motion.js?v={BUILD}"></script>'
     )
 
 

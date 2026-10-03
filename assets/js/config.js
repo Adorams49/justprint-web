@@ -8,7 +8,7 @@ const CONFIG = {
   phoneLabel: "+504 3392-4640",   // como se muestra
   phone: "50433924640",           // solo números, para el enlace de llamada
   email: "jfigueroa@justprinthn.com",
-  hours: "Lun–Vie · 8:00 a.m. – 5:00 p.m. · Sáb 8:00 a.m. – 12:00 p.m.",
+  hours: ["Lun–Vie · 8:00 a.m. – 5:00 p.m.", "Sáb · 8:00 a.m. – 12:00 p.m."],   // una línea por fila
 
   // Ubicación (el mapa ya apunta a tu enlace de Google Maps)
   address: "Col. Universidad, 20 calle A, 8 avenida, San Pedro Sula, Honduras",
