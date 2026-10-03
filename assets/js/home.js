@@ -76,7 +76,6 @@ function openSheet(id) {
   $("#sheetTitle").textContent = s.title;
   $("#sheetText").innerHTML = s.text.map(t => `<p>${esc(t)}</p>`).join("");
   $("#sheetList").innerHTML = s.list.map(t => `<li>${esc(t)}</li>`).join("");
-  $("#sheetCta").dataset.service = s.title;
   $("#sheetPage").href = `servicios/${s.id}.html`;
   $(".sheet__body", sheet).scrollTop = 0;
   sheet.classList.add("is-open");
@@ -98,48 +97,46 @@ sheet.addEventListener("click", e => { if (e.target.closest("[data-close]")) clo
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && sheet.classList.contains("is-open")) closeSheet();
 });
-$("#sheetCta").addEventListener("click", e => {
-  const svc = e.currentTarget.dataset.service;
-  if (svc) sel.value = svc;
-  closeSheet();
-});
+$("#sheetCta").addEventListener("click", closeSheet);
 
-/* ---------- galería "Nuestro trabajo": scroll horizontal fijo (escritorio) ---------- */
+/* ---------- galería "Nuestro trabajo": carrusel con flechas ----------
+   Es un contenedor con scroll horizontal normal (deslizar con el dedo o el trackpad también sirve);
+   las flechas avanzan de a una "página" de fotos y la barra muestra el avance. */
 (function work() {
-  const sec = $("[data-work]"), track = $("#workTrack"), bar = $("[data-work-bar]");
-  if (!sec || !track || typeof GALLERY === "undefined") return;
-  GALLERY.forEach(g => {
+  const track = $("#workTrack"), bar = $("[data-work-bar]");
+  const prev = $("[data-work-prev]"), next = $("[data-work-next]");
+  if (!track || typeof GALLERY === "undefined") return;
+  track.innerHTML = GALLERY.map(g => {
     const s = SERVICES.find(x => x.id === g.service);
-    track.insertAdjacentHTML("beforeend", `
+    return `
       <a class="wcard" href="servicios/${esc(g.service)}.html" style="--accent:${s ? s.color : "#35a2db"}">
-        <img src="assets/img/${esc(g.img)}" alt="${esc(g.title)}" decoding="async" draggable="false">
+        <img src="assets/img/${esc(g.img)}" alt="${esc(g.title)}" loading="lazy" decoding="async" draggable="false">
         <span class="wcard__cap"><span>${esc(s ? s.tag : "")}</span><strong>${esc(g.title)}</strong></span>
-      </a>`);
-  });
+      </a>`;
+  }).join("");
 
-  const mq = window.matchMedia("(min-width: 900px)");
-  let pinned = false, overflow = 0, raf = 0;
-  function measure() {
-    pinned = mq.matches && !reduceMotion;
-    sec.classList.toggle("is-pinned", pinned);
-    if (!pinned) { sec.style.height = ""; track.style.transform = ""; return; }
-    overflow = Math.max(0, track.scrollWidth - window.innerWidth);
-    sec.style.height = (window.innerHeight + overflow) + "px";
-    tick();
+  const max = () => track.scrollWidth - track.clientWidth;
+  function sync() {
+    const m = max(), x = track.scrollLeft;
+    bar.parentElement.style.setProperty("--wp", m > 0 ? (x / m).toFixed(4) : 1);
+    prev.disabled = x <= 2;
+    next.disabled = x >= m - 2;
   }
-  function tick() {
-    raf = 0;
-    if (!pinned) return;
-    const r = sec.getBoundingClientRect();
-    const p = clamp(-r.top / Math.max(1, sec.offsetHeight - window.innerHeight));
-    track.style.transform = `translate3d(${(-p * overflow).toFixed(1)}px,0,0)`;
-    bar.style.transform = `scaleX(${p.toFixed(4)})`;
+  function page(dir) {
+    const card = $(".wcard", track);
+    const step = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 22) : track.clientWidth;
+    const perPage = Math.max(1, Math.floor(track.clientWidth / step));
+    track.scrollBy({ left: dir * perPage * step, behavior: reduceMotion ? "auto" : "smooth" });
   }
-  window.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
-  window.addEventListener("resize", measure);
-  window.addEventListener("load", measure);
-  mq.addEventListener("change", measure);
-  measure();
+  prev.addEventListener("click", () => page(-1));
+  next.addEventListener("click", () => page(1));
+  track.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") { e.preventDefault(); page(1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); page(-1); }
+  });
+  track.addEventListener("scroll", sync, { passive: true });
+  window.addEventListener("resize", sync);
+  sync();
 })();
 
 /* ---------- clientes y testimonios (solo si hay datos en config.js) ---------- */
@@ -238,14 +235,31 @@ update();
   const steps = $$("[data-step]");
   const imgs = $$("[data-step-img]");
   const count = $("[data-step-count]");
+  const list = $(".steps");
   if (!steps.length) return;
   let cur = 0;
+  function setActive(i) { steps.forEach((s, k) => s.classList.toggle("is-active", k === i)); }
+  // Reserva el alto del paso más largo: sin esto la sección crece y se encoge al cambiar de paso.
+  function reserve() {
+    list.classList.add("is-measuring");
+    list.style.minHeight = "";
+    let h = 0;
+    steps.forEach((_, k) => { setActive(k); h = Math.max(h, list.offsetHeight); });
+    setActive(cur);
+    list.style.minHeight = h + "px";
+    void list.offsetHeight;   // aplica el estado antes de devolver las transiciones
+    list.classList.remove("is-measuring");
+  }
   function go(i) {
     cur = (i + steps.length) % steps.length;
-    steps.forEach((s, k) => s.classList.toggle("is-active", k === cur));
+    setActive(cur);
     imgs.forEach((im, k) => im.classList.toggle("is-active", k === cur));
     if (count) count.textContent = String(cur + 1).padStart(2, "0");
+    document.dispatchEvent(new CustomEvent("jp:step", { detail: cur }));   // motion.js lo anima
   }
+  reserve();
+  window.addEventListener("resize", reserve);
+  if (document.fonts) document.fonts.ready.then(reserve);
   $("[data-step-prev]").addEventListener("click", () => go(cur - 1));
   $("[data-step-next]").addEventListener("click", () => go(cur + 1));
   steps.forEach((s, k) => s.addEventListener("click", () => go(k)));
@@ -289,9 +303,10 @@ const rows = [];
 if (CONFIG.phone) rows.push(["Teléfono", CONFIG.phoneLabel || CONFIG.phone, `tel:+${CONFIG.phone}`, ICON.phone]);
 if (CONFIG.email) rows.push(["Correo", CONFIG.email, `mailto:${CONFIG.email}`, ICON.mail]);
 if (CONFIG.address) rows.push(["Ubicación", CONFIG.address, CONFIG.mapsLink || null, ICON.pin]);
-if (CONFIG.hours) rows.push(["Horario", CONFIG.hours, null, ICON.clock]);
+if (CONFIG.hours && CONFIG.hours.length) rows.push(["Horario", CONFIG.hours, null, ICON.clock]);
 $("#contactList").innerHTML = rows.map(([k, v, href, ico]) => {
-  const inner = `<span class="contact__ico">${ico}</span><span><span class="contact__k">${esc(k)}</span><span class="contact__v">${esc(v)}</span></span>`;
+  const value = [].concat(v).map(esc).join("<br>");   // un arreglo = una fila por elemento
+  const inner = `<span class="contact__ico">${ico}</span><span><span class="contact__k">${esc(k)}</span><span class="contact__v">${value}</span></span>`;
   const ext = href && href.startsWith("http") ? ' target="_blank" rel="noopener"' : "";
   return `<li>${href ? `<a href="${esc(href)}"${ext}>${inner}</a>` : `<span class="row">${inner}</span>`}</li>`;
 }).join("");

@@ -30,12 +30,15 @@ Doble clic en **`preview.bat`** → abre `http://localhost:8080` con lo que haya
 | `assets/img/` | Fotos y logos. |
 | `index.html` | Textos fijos de la página principal. |
 | `assets/css/style.css` | Estilos. |
+| `assets/js/motion.js` | Animaciones con GSAP: tarjetas 3D, botones magnéticos y animaciones al hacer scroll. Si GSAP no carga o el visitante pidió "reducir movimiento", la página funciona igual sin ellas. |
+| `assets/vendor/gsap/` | GSAP 3.15.0 (núcleo + ScrollTrigger) guardado dentro del proyecto, sin depender de un CDN. Licencia gratuita de GSAP, permite uso comercial: https://gsap.com/standard-license |
 
 En `config.js`:
 
 - `GALLERY`: fotos que se deslizan de lado en "Nuestro trabajo". Para agregar una, súbela a `assets/img/` y agrega una línea.
 - `CLIENTS` / `TESTIMONIALS`: vacíos = esas secciones no aparecen.
 - `SOCIAL`: enlaces de Facebook e Instagram (salen en el pie de página). Vacío = ícono sin enlace.
+- `hours`: una fila por elemento (por ejemplo, una para lunes a viernes y otra para sábado).
 
 ## Notas
 

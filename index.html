@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=202609231858">
+  <link rel="stylesheet" href="assets/css/style.css?v=202610031446">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Just Print","url":"https://justprinthn.com/","logo":"https://justprinthn.com/assets/img/logo.png","slogan":"Expertos en lo que hacemos","description":"Diseño, impresión e instalación a nivel nacional en Honduras.","areaServed":{"@type":"Country","name":"Honduras"}}
   </script>
@@ -161,11 +161,11 @@
         </li>
       </ol>
       <div class="process__nav reveal" style="--d:.18s">
-        <button class="process__arrow" type="button" data-step-prev aria-label="Paso anterior">
+        <button class="arrow-btn" type="button" data-step-prev aria-label="Paso anterior">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
         <span class="process__count" aria-live="polite"><b data-step-count>01</b> / 03</span>
-        <button class="process__arrow" type="button" data-step-next aria-label="Paso siguiente">
+        <button class="arrow-btn" type="button" data-step-next aria-label="Paso siguiente">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
         </button>
       </div>
@@ -229,18 +229,25 @@
   </div>
 </section>
 
-<!-- ============ NUESTRO TRABAJO (galería horizontal) ============ -->
+<!-- ============ NUESTRO TRABAJO (carrusel con flechas) ============ -->
 <section class="work" id="trabajo" data-work>
-  <div class="work__stage">
-    <div class="work__track" id="workTrack" data-work-track>
-      <div class="work__intro">
-        <p class="eyebrow">Nuestro trabajo</p>
-        <h2 class="h2">Míralo<br>en detalle.</h2>
-        <p class="lead">Lonas, letras con luz, canvas, acrílicos y mucho más. Toca una foto para ver el servicio.</p>
-      </div>
+  <div class="wrap work__head">
+    <div class="work__intro">
+      <p class="eyebrow eyebrow--light reveal">Nuestro trabajo</p>
+      <h2 class="h2 reveal" style="--d:.06s">Míralo<br>en detalle.</h2>
+      <p class="lead reveal" style="--d:.12s">Lonas, letras con luz, canvas, acrílicos y mucho más. Toca una foto para ver el servicio.</p>
     </div>
-    <div class="work__bar" aria-hidden="true"><span data-work-bar></span></div>
+    <div class="work__nav reveal" style="--d:.18s">
+      <button class="arrow-btn" type="button" data-work-prev aria-label="Fotos anteriores" aria-controls="workTrack">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button class="arrow-btn" type="button" data-work-next aria-label="Fotos siguientes" aria-controls="workTrack">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
   </div>
+  <div class="work__track" id="workTrack" tabindex="0" aria-label="Galería de trabajos"></div>
+  <div class="work__bar" aria-hidden="true"><span data-work-bar></span></div>
 </section>
 
 <!-- ============ NOSOTROS ============ -->
@@ -434,9 +441,12 @@
   </article>
 </div>
 
-<script src="assets/js/config.js?v=202609231858"></script>
-<script src="assets/js/data.js?v=202609231858"></script>
-<script src="assets/js/common.js?v=202609231858"></script>
-<script src="assets/js/home.js?v=202609231858"></script>
+<script src="assets/js/config.js?v=202610031446"></script>
+<script src="assets/js/data.js?v=202610031446"></script>
+<script src="assets/js/common.js?v=202610031446"></script>
+<script src="assets/js/home.js?v=202610031446"></script>
+<script src="assets/vendor/gsap/gsap.min.js"></script>
+<script src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="assets/js/motion.js?v=202610031446"></script>
 </body>
 </html>
