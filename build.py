@@ -122,7 +122,8 @@ def head_html(prefix, title, desc, path, img="assets/img/story-printer.webp", ex
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{prefix}assets/css/style.css?v={BUILD}">{extra}"""
+  <link rel="stylesheet" href="{prefix}assets/css/style.css?v={BUILD}">
+  <link rel="stylesheet" href="{prefix}assets/islands/islands.css?v={BUILD}">{extra}"""
 
 
 def scripts_html(prefix):
@@ -132,7 +133,8 @@ def scripts_html(prefix):
         f'<script src="{prefix}assets/js/common.js?v={BUILD}"></script>\n'
         f'<script src="{prefix}assets/vendor/gsap/gsap.min.js"></script>\n'
         f'<script src="{prefix}assets/vendor/gsap/ScrollTrigger.min.js"></script>\n'
-        f'<script src="{prefix}assets/js/motion.js?v={BUILD}"></script>'
+        f'<script src="{prefix}assets/js/motion.js?v={BUILD}"></script>\n'
+        f'<script type="module" src="{prefix}assets/islands/islands.js?v={BUILD}"></script>'
     )
 
 
@@ -280,8 +282,11 @@ def service_page(i, s):
       <header class="section__head">
         <h2 class="h2 reveal">Otros servicios</h2>
       </header>
-      <div class="grid grid--3">
+      <!-- Depth Carousel (React Bits) con los demás servicios. Sin JS quedan las tarjetas. -->
+      <div class="depth-wrap" data-island="depth" data-current="{s['id']}">
+        <div class="grid grid--3">
 {related_cards(i)}
+        </div>
       </div>
     </div>
   </section>

@@ -177,7 +177,7 @@ const TextLoop = ({
       <svg
         className="text-loop-svg"
         viewBox={`0 ${CY - bandHeight / 2} ${VIEW_W} ${bandHeight}`}
-        preserveAspectRatio="xMidYMid meet"
+        preserveAspectRatio="xMidYMid slice"
         role="img"
         aria-label={text}
       >
