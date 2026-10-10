@@ -1,0 +1,20 @@
+{
+  "name": "justprint-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Componentes de React (React Bits) que se montan como islas dentro del sitio estático",
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite build --watch"
+  },
+  "dependencies": {
+    "ogl": "^1.0.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.4",
+    "vite": "^7.3.5"
+  }
+}

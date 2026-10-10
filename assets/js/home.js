@@ -2,62 +2,22 @@
    Just Print — página principal
    ========================================================== */
 
-/* ---------- servicios (tarjetas) ---------- */
-const grid = $("#grid");
-grid.innerHTML = SERVICES.map((s, i) => `
-  <button class="card reveal${s.wide ? " card--wide" : ""}" style="--accent:${s.color};--d:${(i % 3) * .08}s" data-id="${s.id}" aria-haspopup="dialog">
-    <span class="card__img">
-      <img src="assets/img/c-${s.img}.webp" alt="${esc(s.title)}" loading="lazy">
-      <span class="card__tag">${esc(s.tag)}</span>
-    </span>
-    <span class="card__body">
-      <span>
-        <span class="card__title">${esc(s.title)}</span>
-        <span class="card__sub" style="display:block">${esc(s.sub)}</span>
-      </span>
-      <span class="card__plus" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-      </span>
-    </span>
-  </button>`).join("");
-// los .reveal creados aquí no existían cuando common.js armó su observer
+/* ---------- servicios: lista debajo del carrusel circular ----------
+   Cada servicio es un enlace real a su página (sirve sin JavaScript y para Google);
+   con JavaScript abre la ventana de detalle, igual que tocar el carrusel. */
+const svcIndex = $("#svcIndex");
+svcIndex.innerHTML = SERVICES.map((s, i) => `
+  <li class="reveal" style="--accent:${s.color};--d:${(i % 4) * .05}s">
+    <a href="servicios/${s.id}.html" data-id="${s.id}" aria-haspopup="dialog">
+      <strong>${esc(s.title)}</strong>
+      <span>${esc(s.sub)}</span>
+    </a>
+  </li>`).join("");
 (function () {
   const io = new IntersectionObserver(es => es.forEach(en => {
     if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
   }), { threshold: .12, rootMargin: "0px 0px -6% 0px" });
-  $$(".card.reveal", grid).forEach(c => io.observe(c));
-})();
-
-grid.addEventListener("pointermove", e => {
-  const c = e.target.closest(".card");
-  if (!c) return;
-  const r = c.getBoundingClientRect();
-  c.style.setProperty("--mx", e.clientX - r.left + "px");
-  c.style.setProperty("--my", e.clientY - r.top + "px");
-});
-
-/* ---------- filtros de servicios ---------- */
-(function chips() {
-  const box = $("#chips");
-  if (!box) return;
-  box.addEventListener("click", e => {
-    const b = e.target.closest(".chip-btn");
-    if (!b) return;
-    $$(".chip-btn", box).forEach(x => { x.classList.toggle("is-on", x === b); x.setAttribute("aria-pressed", x === b); });
-    const cat = b.dataset.cat;
-    grid.classList.toggle("grid--filtered", cat !== "all");
-    $$(".card", grid).forEach(c => {
-      const s = SERVICES.find(x => x.id === c.dataset.id);
-      const show = cat === "all" || (s.cats || []).includes(cat);
-      c.hidden = !show;
-      c.classList.remove("is-pop");
-      if (show) {
-        c.classList.add("is-in");
-        void c.offsetWidth;                 // reinicia la animación
-        c.classList.add("is-pop");
-      }
-    });
-  });
+  $$("li.reveal", svcIndex).forEach(c => io.observe(c));
 })();
 
 /* ---------- ventana de detalle ---------- */
@@ -120,9 +80,11 @@ function closeSheet() {
   document.body.classList.remove("is-locked");
   if (lastFocus) lastFocus.focus({ preventScroll: true });
 }
-grid.addEventListener("click", e => {
-  const c = e.target.closest(".card");
-  if (c) openSheet(c.dataset.id, c);
+svcIndex.addEventListener("click", e => {
+  const a = e.target.closest("a[data-id]");
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;   // Ctrl/⌘+clic sigue abriendo la página completa
+  e.preventDefault();
+  openSheet(a.dataset.id, a);
 });
 
 /* Celular: arrastrar la hoja hacia abajo para cerrarla (desde el asa o la foto).
@@ -183,101 +145,16 @@ document.addEventListener("keydown", e => {
 });
 $("#sheetCta").addEventListener("click", closeSheet);
 
-/* ---------- galería "Nuestro trabajo": carrusel con flechas ----------
-   Es un contenedor con scroll horizontal normal (deslizar con el dedo o el trackpad también sirve);
-   las flechas avanzan de a una "página" de fotos y la barra muestra el avance. */
-(function work() {
-  const track = $("#workTrack"), bar = $("[data-work-bar]");
-  const prev = $("[data-work-prev]"), next = $("[data-work-next]");
-  if (!track || typeof GALLERY === "undefined") return;
-  track.innerHTML = GALLERY.map(g => {
-    const s = SERVICES.find(x => x.id === g.service);
-    return `
-      <a class="wcard" href="servicios/${esc(g.service)}.html" style="--accent:${s ? s.color : "#35a2db"}">
-        <img src="assets/img/${esc(g.img)}" alt="${esc(g.title)}" loading="lazy" decoding="async" draggable="false">
-        <span class="wcard__cap"><span>${esc(s ? s.tag : "")}</span><strong>${esc(g.title)}</strong></span>
-      </a>`;
-  }).join("");
-
-  const max = () => track.scrollWidth - track.clientWidth;
-  function sync() {
-    const m = max(), x = track.scrollLeft;
-    bar.parentElement.style.setProperty("--wp", m > 0 ? (x / m).toFixed(4) : 1);
-    prev.disabled = x <= 2;
-    next.disabled = x >= m - 2;
-  }
-  function page(dir) {
-    const card = $(".wcard", track);
-    const step = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 22) : track.clientWidth;
-    const perPage = Math.max(1, Math.floor(track.clientWidth / step));
-    track.scrollBy({ left: dir * perPage * step, behavior: reduceMotion ? "auto" : "smooth" });
-  }
-  prev.addEventListener("click", () => page(-1));
-  next.addEventListener("click", () => page(1));
-  track.addEventListener("keydown", e => {
-    if (e.key === "ArrowRight") { e.preventDefault(); page(1); }
-    if (e.key === "ArrowLeft") { e.preventDefault(); page(-1); }
-  });
-  track.addEventListener("scroll", sync, { passive: true });
-  window.addEventListener("resize", sync);
-  sync();
-
-  /* Arrastrar con el mouse (en táctil ya existe el deslizar nativo con impulso).
-     Sigue al cursor 1:1, en los bordes se resiste como goma y al soltar "lanza" la galería:
-     proyecta a dónde iba con esa velocidad y se acomoda en la foto más cercana a ese punto. */
-  let drag = null, glide = null, band = null;
-  const cards = () => $$(".wcard", track);
-  function nearestStop(pos) {
-    const pl = parseFloat(getComputedStyle(track).paddingLeft), tl = track.getBoundingClientRect().left;
-    const stops = cards().map(c => clamp(c.getBoundingClientRect().left - tl + track.scrollLeft - pl, 0, max()));
-    stops.push(max());
-    return stops.reduce((a, b) => Math.abs(b - pos) < Math.abs(a - pos) ? b : a, 0);
-  }
-  const setBand = x => { track.style.transform = Math.abs(x) > .5 ? `translateX(${x.toFixed(1)}px)` : ""; };
-  track.addEventListener("pointerdown", e => {
-    if (e.pointerType !== "mouse" || e.button !== 0) return;
-    if (glide) { glide(); glide = null; }               // agarrarla mientras se desliza la detiene ahí mismo
-    if (band) { band(); band = null; setBand(0); }
-    drag = { x: e.clientX, left: track.scrollLeft, id: e.pointerId, moved: false, over: 0, samples: [] };
-  });
-  track.addEventListener("pointermove", e => {
-    if (!drag || e.pointerId !== drag.id) return;
-    if (!drag.moved) {
-      if (Math.abs(e.clientX - drag.x) < 8) return;     // umbral: un clic normal sigue abriendo la foto
-      drag.moved = true; drag.x = e.clientX; drag.left = track.scrollLeft;
-      try { track.setPointerCapture(e.pointerId); } catch (err) { /* sin captura: igual funciona dentro de la galería */ }
-      track.classList.add("is-dragging");
-      // la foto donde empezó el arrastre ya no recibe el "soltar": se devuelve a su estado normal
-      if (window.gsap) gsap.to(cards(), { scale: 1, rotationX: 0, rotationY: 0, y: 0, duration: .3, ease: "power3.out", overwrite: "auto" });
-    }
-    const want = drag.left - (e.clientX - drag.x), m = max();
-    track.scrollLeft = clamp(want, 0, m);
-    drag.over = want - clamp(want, 0, m);
-    setBand(drag.over ? -rubberband(drag.over, track.clientWidth) : 0);
-    drag.samples.push({ v: want, t: performance.now() }); if (drag.samples.length > 6) drag.samples.shift();
-    sync();
-  });
-  function release(e) {
-    if (!drag || e.pointerId !== drag.id) return;
-    const d = drag; drag = null;
-    if (!d.moved) return;
-    track.classList.remove("is-dragging");
-    // el clic que llega al soltar no debe abrir la foto
-    const block = ev => { ev.preventDefault(); ev.stopPropagation(); };
-    track.addEventListener("click", block, true);
-    setTimeout(() => track.removeEventListener("click", block, true), 0);
-    if (d.over) {
-      band = spring({ from: -rubberband(d.over, track.clientWidth), to: 0, response: .4, onUpdate: setBand, onDone: () => { band = null; } });
-      return;
-    }
-    const vel = velocityOf(d.samples), from = track.scrollLeft;
-    const to = nearestStop(from + project(vel));
-    track.style.scrollSnapType = "none";               // el "imán" de CSS pelearía con el resorte
-    glide = spring({ from, to, velocity: vel, response: .5, onUpdate: x => { track.scrollLeft = x; },
-      onDone: () => { glide = null; track.style.scrollSnapType = ""; sync(); } });
-  }
-  track.addEventListener("pointerup", release);
-  track.addEventListener("pointercancel", release);
+/* ---------- galería "Nuestro trabajo": versión simple ----------
+   Una tira de fotos con scroll horizontal. Es lo que se ve si el navegador no tiene
+   WebGL; cuando sí lo tiene, la isla de React la reemplaza por el Morph Slider. */
+(function workStrip() {
+  const strip = $("#workStrip");
+  if (!strip || typeof GALLERY === "undefined") return;
+  strip.innerHTML = GALLERY.map(g => `
+    <a class="work__shot" href="servicios/${esc(g.service)}.html">
+      <img src="assets/img/${esc(g.img)}" alt="${esc(g.title)}" loading="lazy" decoding="async">
+    </a>`).join("");
 })();
 
 /* ---------- clientes y testimonios (solo si hay datos en config.js) ---------- */
@@ -328,8 +205,6 @@ if (words) {
 }
 
 /* ---------- scroll: lo ligado al desplazamiento ---------- */
-const hero = $("[data-hero]");
-const heroFrame = $("[data-hero-frame]");
 const statement = $("[data-statement]");
 const catalog = $("[data-catalog]");
 const about = $(".about");
@@ -342,11 +217,6 @@ function update() {
   const vh = window.innerHeight;
 
   if (!reduceMotion) {
-    const hr = hero.getBoundingClientRect();
-    if (hr.bottom > 0) {
-      const fr = heroFrame.getBoundingClientRect();
-      hero.style.setProperty("--p", clamp(1 - (fr.top - vh * .12) / (vh * .75)).toFixed(4));
-    }
     if (statement && wordEls.length) {
       const r = statement.getBoundingClientRect();
       const p = clamp((vh * .82 - r.top) / (r.height * .8 + vh * .1));

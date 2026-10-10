@@ -14,6 +14,9 @@ assets/catalogo-just-print-2026-ligero.pdf
 # Notas de la renovación SSL manual en GoDaddy (ya no aplica: GitHub Pages da HTTPS automático)
 ssl-renovacion/
 
+# Dependencias de npm (se reinstalan con "npm install")
+node_modules/
+
 # Sistema
 .DS_Store
 Thumbs.db

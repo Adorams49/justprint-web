@@ -55,7 +55,7 @@ def nav_html(prefix):
       <a href="{home('#contacto')}">Contacto</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" title="Modo claro / oscuro">{ICON_SUN}{ICON_MOON}</button>
-    <a class="btn btn--sm btn--blue nav__cta" href="{home('#contacto')}">Cotizar</a>
+    <a class="btn btn--sm btn--blue nav__cta" href="{home('#contacto')}">Pedir cotización</a>
     <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span>
     </button>
@@ -121,7 +121,7 @@ def head_html(prefix, title, desc, path, img="assets/img/story-printer.webp", ex
   {THEME_INIT}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{prefix}assets/css/style.css?v={BUILD}">{extra}"""
 
 
@@ -224,7 +224,7 @@ def service_page(i, s):
       <a href="#incluye">Incluye</a>
       <a href="#otros">Otros servicios</a>
     </nav>
-    <a class="btn btn--sm btn--blue" href="../index.html#contacto">Cotizar</a>
+    <a class="btn btn--sm btn--blue" href="../index.html#contacto">Pedir cotización</a>
   </div>
 </div>
 
@@ -242,7 +242,7 @@ def service_page(i, s):
         <h1 class="phero__title reveal" style="--d:.1s">{esc(s['title'])}</h1>
         <p class="phero__sub reveal" style="--d:.16s">{esc(s['sub'])}</p>
         <div class="hero__cta hero__cta--left reveal" style="--d:.22s">
-          <a class="btn btn--blue" href="../index.html#contacto">Cotizar este servicio</a>
+          <a class="btn btn--blue" href="../index.html#contacto">Pedir cotización</a>
           <a class="btn btn--ghost" href="../index.html#catalogo">Ver catálogo</a>
         </div>
       </div>
@@ -278,8 +278,7 @@ def service_page(i, s):
   <section class="section section--soft" id="otros">
     <div class="wrap">
       <header class="section__head">
-        <p class="eyebrow reveal">Sigue explorando</p>
-        <h2 class="h2 reveal" style="--d:.06s">Otros servicios</h2>
+        <h2 class="h2 reveal">Otros servicios</h2>
       </header>
       <div class="grid grid--3">
 {related_cards(i)}
@@ -291,9 +290,9 @@ def service_page(i, s):
 
   <section class="cta-band">
     <div class="wrap cta-band__inner">
-      <h2 class="h2 h2--light reveal">¿Listo para empezar<br>tu proyecto?</h2>
+      <h2 class="h2 h2--light reveal">¿Listo para empezar tu proyecto?</h2>
       <p class="lead lead--light reveal" style="--d:.06s">Cuéntanos qué necesitas y te enviamos una cotización.</p>
-      <div class="reveal" style="--d:.12s"><a class="btn btn--white" href="../index.html#contacto">Hablemos</a></div>
+      <div class="reveal" style="--d:.12s"><a class="btn btn--white" href="../index.html#contacto">Pedir cotización</a></div>
     </div>
   </section>
 </main>
@@ -360,7 +359,7 @@ def main():
     idx = (ROOT / "index.html").read_text(encoding="utf-8")
     idx = inject(idx, "nav", nav_html(""))
     idx = inject(idx, "footer", footer_html(""))
-    idx = re.sub(r'(assets/(?:css|js)/[\w.-]+\.(?:css|js))(?:\?v=\w+)?(?=")', rf"\1?v={BUILD}", idx)
+    idx = re.sub(r'(assets/(?:css|js|islands)/[\w.-]+\.(?:css|js))(?:\?v=\w+)?(?=")', rf"\1?v={BUILD}", idx)
     (ROOT / "index.html").write_text(idx, encoding="utf-8", newline="\n")
     print("  ✔ index.html (menú y pie)")
 
