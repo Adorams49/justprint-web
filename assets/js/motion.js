@@ -18,7 +18,8 @@
     el.addEventListener("pointerenter", () => { el.style.transition = OWN; }, { once: true });
   }
 
-  /* ---------- botones magnéticos: siguen un poco al cursor y regresan con rebote ---------- */
+  /* ---------- botones magnéticos: siguen un poco al cursor y regresan suave ----------
+     Sin rebote al soltar: según Apple, el rebote solo se justifica después de un gesto con impulso. */
   function magnetic(el, strength = .28, max = 9) {
     takeOver(el);
     const toX = gsap.quickTo(el, "x", { duration: .45, ease: "power3.out" });
@@ -29,10 +30,17 @@
       toY(clamp((e.clientY - r.top - r.height / 2) * strength, -max, max));
     });
     el.addEventListener("pointerleave", () => {
-      gsap.to(el, { x: 0, y: 0, scale: 1, duration: .7, ease: "elastic.out(1, .45)", overwrite: "auto" });
+      gsap.to(el, { x: 0, y: 0, scale: 1, duration: .5, ease: "power3.out", overwrite: "auto" });
     });
-    el.addEventListener("pointerdown", () => gsap.to(el, { scale: .96, duration: .15, ease: "power2.out" }));
-    el.addEventListener("pointerup", () => gsap.to(el, { scale: 1, duration: .4, ease: "back.out(3)" }));
+    press(el, .96);
+  }
+
+  // Respuesta al presionar (el CSS :active no aplica cuando GSAP controla el transform del elemento)
+  function press(el, s = .97) {
+    el.addEventListener("pointerdown", () => gsap.to(el, { scale: s, duration: .1, ease: "power2.out" }));
+    const up = () => gsap.to(el, { scale: 1, duration: .35, ease: "power3.out" });
+    el.addEventListener("pointerup", up);
+    el.addEventListener("pointercancel", up);
   }
 
   /* ---------- tarjetas 3D: se inclinan hacia el cursor con un brillo que lo sigue ----------
@@ -53,8 +61,9 @@
     });
     el.addEventListener("pointerleave", () => {
       rx(0); ry(0);
-      gsap.to(el, { y: 0, duration: .7, ease: "power3.out", overwrite: "auto" });
+      gsap.to(el, { y: 0, scale: 1, duration: .7, ease: "power3.out", overwrite: "auto" });
     });
+    press(el);
   }
 
   if (finePointer) {
