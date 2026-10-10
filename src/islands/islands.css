@@ -40,3 +40,88 @@
 @media (max-width: 640px) {
   .catalog .hold-button { width: 100%; }
 }
+
+/* ==========================================================
+   Ronda 2
+   ========================================================== */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- Drift Wall de fondo en el inicio ---------- */
+.hero__wall { position: absolute; inset: 0; z-index: 0; opacity: .55; pointer-events: none; }
+.hero__wall .drift-wall { width: 100%; height: 100%; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(4, 31, 64, .92) 0%, rgba(4, 31, 64, .7) 45%, rgba(4, 31, 64, .2) 100%); }
+
+/* ---------- Tech Text en el título ---------- */
+.hero__tech.is-island { display: block; }
+.hero__tech-line { display: block; height: clamp(72px, 8.4vw, 124px); width: 108%; margin-left: -5.4%; }
+.hero__title:has(.hero__tech.is-island) { line-height: 1; margin: 26px 0 -4px; }
+.hero__tech-line .tech-text { width: 100%; height: 100%; }
+
+/* ---------- Text Loop bajo el inicio ---------- */
+.loopbar.is-island { background: var(--navy-2); height: clamp(110px, 12vw, 160px); overflow: hidden; border-top: 1px solid rgba(255, 255, 255, .08); }
+.loopbar .text-loop { width: 100%; height: 100%; }
+.loopbar .text-loop-svg { width: 100%; height: 100%; }
+
+/* ---------- Chroma Grid ---------- */
+.chroma-wrap { margin-top: clamp(24px, 4vw, 48px); }
+.chroma-wrap.is-island { position: relative; }
+
+/* ---------- Scroll Stack: razones ---------- */
+.why-stack.is-island .scroll-stack__inner { padding-inline: 0; }
+.why-card.scroll-stack-card {
+  height: clamp(300px, 34vw, 380px); padding: 0; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--navy-2); color: #fff; border-radius: var(--r);
+}
+.why-card__copy { padding: clamp(26px, 4vw, 48px); display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1; }
+.why-card__k { font-size: .95rem; font-weight: 600; color: var(--blue-2); }
+.why-card__h { margin-top: 10px; font-family: var(--font-display); font-size: clamp(1.7rem, 3vw, 2.7rem); line-height: 1.05; letter-spacing: -.03em; font-weight: 750; }
+.why-card__p { margin-top: 14px; max-width: 26em; line-height: 1.55; color: rgba(255, 255, 255, .78); }
+.why-card__img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 720px) {
+  .why-card.scroll-stack-card { grid-template-columns: 1fr; grid-template-rows: 1fr 130px; height: 400px; }
+  .why-card__img { order: 2; }
+}
+
+/* ---------- Scroll Expand + Crosshair ---------- */
+.expand { position: relative; background: #020b17; color: #fff; }
+.expand__fallback { padding: clamp(64px, 9vw, 120px) 0; display: grid; gap: 28px; }
+.expand__fallback img { border-radius: 28px; width: 100%; }
+.expand__fallback .h2 { color: #fff; }
+.expand-copy { position: relative; display: grid; justify-items: center; text-align: center; gap: 14px; padding: 48px 24px; width: 100%; height: 100%; align-content: center; }
+.expand-copy__k { font-size: .95rem; font-weight: 600; color: var(--blue-2); letter-spacing: .02em; }
+.expand-copy__h { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1.02; letter-spacing: -.03em; font-weight: 800; max-width: 14em; text-wrap: balance; }
+.expand-copy__p { max-width: 30em; color: rgba(255, 255, 255, .82); font-size: clamp(1rem, 1.5vw, 1.2rem); }
+.expand-copy .btn { margin-top: 10px; }
+
+/* ---------- Card Swap en Nosotros ---------- */
+.about__swap.is-island { position: relative; height: clamp(360px, 40vw, 480px); display: grid; place-items: center; }
+
+/* ---------- Accordion Gallery del catálogo ---------- */
+.catalog__acc.is-island { width: 100%; }
+.catalog__acc .accordion-gallery { width: 100%; }
+
+/* ---------- Magnet Lines en Preguntas ---------- */
+:root { --magnet: rgba(6, 47, 94, .28); }
+:root[data-theme="dark"] { --magnet: rgba(124, 200, 238, .35); }
+.faq__magnet { margin-top: 36px; width: 100%; max-width: 360px; aspect-ratio: 11 / 7; }
+.faq__magnet:not(.is-island) { display: none; }
+.faq__magnet .magnetLines-container { width: 100% !important; height: 100% !important; }
+@media (max-width: 980px) { .faq__magnet { display: none; } }
+
+/* ---------- "Desarrollado por" en círculo ---------- */
+.dev { display: inline-flex; align-items: center; gap: 12px; }
+.dev__circle.is-island { display: block; width: 92px; height: 92px; }
+.dev__circle.is-island + .dev__text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.dev__circle .circular-text { width: 92px; height: 92px; color: rgba(255, 255, 255, .8); font-weight: 700; }
+.dev__circle .circular-text span { font-size: 10px; }
+
+/* ---------- Menú de arriba con Jelly Radio ---------- */
+@media (min-width: 821px) {
+  .nav__links.is-jelly { display: none; }
+  .nav__jelly { display: flex; }
+  .nav__jelly .jelly-radio { font-family: var(--font-body); font-weight: 500; }
+}
+@media (max-width: 820px) { .nav__jelly { display: none; } }
+.loopbar text, .loopbar textPath { white-space: pre; }
+.footer__legal:has(.dev__circle.is-island) { align-items: center; padding-right: 72px; }

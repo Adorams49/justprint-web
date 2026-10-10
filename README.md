@@ -50,6 +50,8 @@ La página sigue siendo HTML normal (Google lee todo el texto). Solo cuatro part
 - **Morph Slider** (WebGL): "Nuestro trabajo". Sin WebGL se ve una tira de fotos normal.
 - **Hold Button**: catálogo. Mantener presionado abre un correo para pedirlo.
 
+Ronda 2 (`src/islands/round2.jsx`): **Drift Wall** (fondo del inicio), **Tech Text** (título), **Text Loop** (barra bajo el inicio), **Chroma Grid** (servicios bajo el carrusel), **Scroll Stack** (Por qué Just Print), **Scroll Expand** + **Crosshair** (sección "a la medida"), **Card Swap** (Nosotros), **Accordion Gallery** (catálogo), **Magnet Lines** (Preguntas), **Shiny Text** (etiquetas), **Circular Text** ("desarrollado por") y **Jelly Radio** (menú de arriba en escritorio).
+
 Si algo de React falla, se queda el contenido simple del HTML. Para recompilar hace falta Node.js (`npm install` la primera vez, luego `npm run build`). Las miniaturas `assets/img/t-*.webp` (espiral) se hicieron a partir de las fotos `m-*`.
 
 ## Notas

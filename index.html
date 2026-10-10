@@ -20,8 +20,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=202610101528">
-  <link rel="stylesheet" href="assets/islands/islands.css?v=202610101528">
+  <link rel="stylesheet" href="assets/css/style.css?v=202610101651">
+  <link rel="stylesheet" href="assets/islands/islands.css?v=202610101651">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Just Print","url":"https://justprinthn.com/","logo":"https://justprinthn.com/assets/img/logo.png","slogan":"Expertos en lo que hacemos","description":"Diseño, impresión e instalación a nivel nacional en Honduras.","areaServed":{"@type":"Country","name":"Honduras"}}
   </script>
@@ -36,7 +36,7 @@
     <a class="nav__logo" href="#inicio" aria-label="Just Print, inicio">
       <img src="assets/img/logo-white-mark.png" alt="Just Print" width="856" height="471">
     </a>
-    <nav class="nav__links" id="navLinks" aria-label="Principal">
+    <nav class="nav__links" id="navLinks" aria-label="Principal" data-jellynav>
       <a href="#servicios">Servicios</a>
       <a href="#proceso">Proceso</a>
       <a href="#nosotros">Nosotros</a>
@@ -57,13 +57,15 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="inicio" data-hero>
+  <!-- Drift Wall (React Bits): muro de trabajos a la deriva, de fondo -->
+  <div class="hero__wall" data-island="driftwall" aria-hidden="true"></div>
   <div class="wrap hero__inner">
     <div class="hero__copy">
       <a class="pill reveal" href="#catalogo">
-        Pide el catálogo 2026
+        <span data-island="shiny">Pide el catálogo 2026</span>
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
       </a>
-      <h1 class="hero__title reveal" style="--d:.08s">Expertos en <span class="hl">lo que hacemos.</span></h1>
+      <h1 class="hero__title reveal" style="--d:.08s"><span class="hero__tech" data-island="techtext" data-lines="Expertos en|lo que hacemos.">Expertos en <span class="hl">lo que hacemos.</span></span></h1>
       <p class="hero__sub reveal" style="--d:.16s">Diseño, impresión e instalación para que tu marca se vea increíble, a menor costo y en todo Honduras.</p>
       <div class="hero__cta reveal" style="--d:.24s">
         <a class="btn btn--blue" href="#contacto">Pedir cotización</a>
@@ -81,11 +83,14 @@
 </section>
 
 <!-- ============ MARQUEE ============ -->
+<!-- Text Loop (React Bits): los servicios viajan sobre una onda. Sin JS queda la cinta. -->
+<div class="loopbar" data-island="textloop">
 <div class="marquee" aria-hidden="true">
   <div class="marquee__track">
     <span>Gran formato</span><span>Lonas</span><span>Viniles</span><span>Canvas</span><span>Offset</span><span>Letras encajueladas</span><span>Estructuras metálicas</span><span>Mueblería</span><span>Acrílicos</span><span>Centro de copiado</span><span>Display publicitario</span><span>Promocionales</span>
     <span>Gran formato</span><span>Lonas</span><span>Viniles</span><span>Canvas</span><span>Offset</span><span>Letras encajueladas</span><span>Estructuras metálicas</span><span>Mueblería</span><span>Acrílicos</span><span>Centro de copiado</span><span>Display publicitario</span><span>Promocionales</span>
   </div>
+</div>
 </div>
 
 <!-- ============ STATEMENT ============ -->
@@ -104,7 +109,10 @@
   <!-- Carrusel circular (React Bits): se arrastra, gira solo y responde a las flechas del teclado -->
   <div class="services__stage reveal" style="--d:.12s" data-island="services"></div>
   <div class="wrap">
-    <ul class="svc-index" id="svcIndex" aria-label="Lista de servicios"></ul>
+    <!-- Chroma Grid (React Bits): los servicios con foto, se iluminan bajo el cursor -->
+    <div class="chroma-wrap" data-island="chroma">
+      <ul class="svc-index" id="svcIndex" aria-label="Lista de servicios"></ul>
+    </div>
     <noscript><p class="lead">Activa JavaScript para explorar los servicios, o <a href="#contacto">contáctanos</a> para más información.</p></noscript>
   </div>
 </section>
@@ -113,7 +121,7 @@
 <section class="process" id="proceso">
   <div class="wrap process__inner">
     <div class="process__text">
-      <p class="eyebrow eyebrow--light reveal">Cómo trabajamos</p>
+      <p class="eyebrow eyebrow--light reveal"><span data-island="shiny">Cómo trabajamos</span></p>
       <h2 class="h2 h2--light reveal" style="--d:.06s">De la idea a la pared.</h2>
       <ol class="steps reveal" style="--d:.12s">
         <li class="step is-active" data-step>
@@ -158,6 +166,8 @@
     <header class="section__head">
       <h2 class="h2 reveal">Lo mejor de cada etapa, en un solo lugar.</h2>
     </header>
+    <!-- Scroll Stack (React Bits): las razones se apilan al hacer scroll. Sin JS queda el bento. -->
+    <div class="why-stack" data-island="stack">
     <div class="bento">
       <article class="tile tile--dark tile--a reveal reveal--scale">
         <img class="tile__bg" src="assets/img/c-granformato.webp" alt="" loading="lazy">
@@ -199,6 +209,15 @@
         </div>
       </article>
     </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TALLER: Scroll Expand + Crosshair "a la medida" ============ -->
+<section class="expand" id="taller" data-island="expand">
+  <div class="wrap expand__fallback">
+    <img src="assets/img/story-printer.webp" alt="Impresora de gran formato en el taller de Just Print" loading="lazy" width="1275" height="745">
+    <h2 class="h2">Tú pones la medida. Nosotros la imprimimos.</h2>
   </div>
 </section>
 
@@ -225,7 +244,7 @@
 <section class="about" id="nosotros">
   <div class="wrap about__grid">
     <div class="about__copy">
-      <p class="eyebrow reveal">¿Quiénes somos?</p>
+      <p class="eyebrow reveal"><span data-island="shiny">¿Quiénes somos?</span></p>
       <h2 class="h2 reveal" style="--d:.06s">Tu mejor opción en impresión digital.</h2>
       <p class="lead reveal" style="--d:.12s">
         Atendemos las exigencias del mercado en Honduras, comprometidos con nuestros clientes para brindarles el mejor servicio, a menor costo y con atención adaptada a sus necesidades.
@@ -236,10 +255,13 @@
       </blockquote>
     </div>
     <div class="about__media reveal reveal--scale">
+      <!-- Card Swap (React Bits). Sin JS queda el mosaico. -->
+      <div class="about__swap" data-island="cardswap">
       <div class="mosaic">
         <img src="assets/img/m-lona.webp" alt="Lonas impresas: backlight, frontlight y blockout" loading="lazy" width="800" height="1245">
         <img src="assets/img/m-letras.webp" alt="Letras encajueladas con y sin luz" loading="lazy" width="800" height="1250">
         <img src="assets/img/m-canvas.webp" alt="Cuadros canvas personalizados" loading="lazy" width="800" height="1245">
+      </div>
       </div>
       <div class="about__badge"><strong>Expertos</strong> en lo que hacemos</div>
     </div>
@@ -277,10 +299,13 @@
       </div>
       <p class="catalog__note reveal" style="--d:.22s">O llámanos al <a href="tel:+50433924640">+504 3392-4640</a></p>
     </div>
+    <!-- Accordion Gallery (React Bits): secciones del catálogo -->
+    <div class="catalog__acc" data-island="accordion">
     <div class="catalog__stack" aria-hidden="true">
       <img class="pg pg--1" src="assets/img/cat-3.webp" alt="" loading="lazy">
       <img class="pg pg--2" src="assets/img/cat-2.webp" alt="" loading="lazy">
       <img class="pg pg--3" src="assets/img/cat-1.webp" alt="" loading="lazy">
+    </div>
     </div>
   </div>
 </section>
@@ -292,6 +317,8 @@
       <h2 class="h2 reveal">Resolvemos tus dudas.</h2>
       <p class="lead reveal" style="--d:.12s">¿No encuentras lo que buscas? Escríbenos y te ayudamos.</p>
       <div class="reveal" style="--d:.18s"><a class="btn btn--outline" href="#contacto">Pedir cotización</a></div>
+      <!-- Magnet Lines (React Bits): líneas que siguen al cursor -->
+      <div class="faq__magnet" data-island="magnet" aria-hidden="true"></div>
     </div>
     <div class="faq__list" id="faqList"></div>
   </div>
@@ -301,7 +328,7 @@
 <section class="section section--soft" id="contacto">
   <div class="wrap contact">
     <div class="contact__copy">
-      <p class="eyebrow reveal">Contacto</p>
+      <p class="eyebrow reveal"><span data-island="shiny">Contacto</span></p>
       <h2 class="h2 reveal" style="--d:.06s">Hablemos de tu proyecto.</h2>
       <p class="lead reveal" style="--d:.12s">Cuéntanos qué necesitas y te respondemos con una cotización.</p>
       <ul class="contact__list reveal" style="--d:.18s" id="contactList"></ul>
@@ -377,7 +404,7 @@
   </div>
   <div class="wrap footer__legal">
     <span>© <span data-year>2026</span> Just Print. Todos los derechos reservados.</span>
-    <span>Desarrollado por <strong>Ari Ramos</strong></span>
+    <span class="dev"><span class="dev__circle" data-island="circular" aria-hidden="true"></span><span class="dev__text">Desarrollado por <strong>Ari Ramos</strong></span></span>
   </div>
 </footer>
 <button class="totop" id="toTop" type="button" aria-label="Volver arriba">
@@ -407,13 +434,13 @@
   </article>
 </div>
 
-<script src="assets/js/config.js?v=202610101528"></script>
-<script src="assets/js/data.js?v=202610101528"></script>
-<script src="assets/js/common.js?v=202610101528"></script>
-<script src="assets/js/home.js?v=202610101528"></script>
+<script src="assets/js/config.js?v=202610101651"></script>
+<script src="assets/js/data.js?v=202610101651"></script>
+<script src="assets/js/common.js?v=202610101651"></script>
+<script src="assets/js/home.js?v=202610101651"></script>
 <script src="assets/vendor/gsap/gsap.min.js"></script>
 <script src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
-<script src="assets/js/motion.js?v=202610101528"></script>
-<script type="module" src="assets/islands/islands.js?v=202610101528"></script>
+<script src="assets/js/motion.js?v=202610101651"></script>
+<script type="module" src="assets/islands/islands.js?v=202610101651"></script>
 </body>
 </html>
