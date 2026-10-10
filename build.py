@@ -46,7 +46,7 @@ def nav_html(prefix):
     <a class="nav__logo" href="{logo_href}" aria-label="Just Print, inicio">
       <img src="{prefix}{LOGO}" alt="Just Print" width="856" height="471">
     </a>
-    <nav class="nav__links" id="navLinks" aria-label="Principal">
+    <nav class="nav__links" id="navLinks" aria-label="Principal" data-jellynav>
       <a href="{home('#servicios')}">Servicios</a>
       <a href="{home('#proceso')}">Proceso</a>
       <a href="{home('#nosotros')}">Nosotros</a>
@@ -93,7 +93,7 @@ def footer_html(prefix):
   </div>
   <div class="wrap footer__legal">
     <span>© <span data-year>2026</span> Just Print. Todos los derechos reservados.</span>
-    <span>Desarrollado por <strong>Ari Ramos</strong></span>
+    <span class="dev"><span class="dev__circle" data-island="circular" aria-hidden="true"></span><span class="dev__text">Desarrollado por <strong>Ari Ramos</strong></span></span>
   </div>
 </footer>
 <button class="totop" id="toTop" type="button" aria-label="Volver arriba">

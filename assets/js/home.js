@@ -236,6 +236,7 @@ function update() {
   let current = "";
   sections.forEach(([id, el]) => { if (el && el.getBoundingClientRect().top <= vh * .4) current = id; });
   navAnchors.forEach(a => a.classList.toggle("is-active", a.getAttribute("href") === "#" + current));
+  if (current !== update.last) { update.last = current; document.dispatchEvent(new CustomEvent("jp:section", { detail: current })); }
 }
 function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
 window.addEventListener("scroll", onScroll, { passive: true });

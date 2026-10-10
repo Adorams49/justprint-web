@@ -14,6 +14,7 @@ import CircularCarousel from './reactbits/CircularCarousel.jsx';
 import MorphSlider from './reactbits/MorphSlider.jsx';
 import HoldButton from './reactbits/HoldButton.jsx';
 import './islands.css';
+import { round2 } from './round2.jsx';
 
 /* global SERVICES, GALLERY, CONFIG */
 const services = typeof SERVICES !== 'undefined' ? SERVICES : [];
@@ -189,3 +190,6 @@ mount('hold', () => {
     </HoldButton>
   );
 });
+
+/* ---------- Ronda 2: Drift Wall, Tech Text, Text Loop, Chroma Grid, Scroll Stack, etc. ---------- */
+round2({ mount, services, gallery, finePointer });
