@@ -1,0 +1,42 @@
+/* ==========================================================
+   Ajustes de los componentes de React Bits a la marca Just Print
+   (sus estilos originales vienen en reactbits/*.css)
+   ========================================================== */
+
+/* ---------- Espiral del inicio ---------- */
+.hero__spiral .infinite-spiral { min-height: 0; }
+.hero__spiral .infinite-spiral__item {
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: #0a1a2e;
+  box-shadow: 0 24px 50px -18px rgba(1, 10, 24, .7);
+}
+.hero__spiral .infinite-spiral__item:focus-visible { outline: 3px solid var(--blue-2); outline-offset: 3px; }
+
+/* ---------- Carrusel circular de servicios ---------- */
+.services__stage .circular-carousel:focus-visible { box-shadow: none; outline: 3px solid var(--blue-ink); outline-offset: -3px; border-radius: 24px; }
+.services__stage .circular-carousel__caption { bottom: 6px; color: var(--head); }
+.services__stage .circular-carousel__title {
+  font-family: var(--font-display); font-size: clamp(1.15rem, 1.8vw, 1.45rem); font-weight: 700; letter-spacing: -.02em; gap: 4px;
+}
+.services__stage .circular-carousel__subtitle {
+  font-family: var(--font-body); font-size: .95rem; font-weight: 400; letter-spacing: 0; color: var(--muted); opacity: 1;
+}
+/* el contador "01 / 12" no aporta: el título del servicio ya dice dónde estás */
+.services__stage .circular-carousel__count { display: none; }
+
+/* ---------- Galería "Nuestro trabajo" ---------- */
+.work__stage .morph-slider { position: absolute; inset: 0; border-radius: inherit !important; background: #0a1a2e; }
+.work__stage .morph-slider-btn { width: 46px; height: 46px; background: rgba(2, 11, 23, .5); }
+.work__stage .morph-slider-dot { width: 7px; height: 7px; }
+.work__stage .morph-slider-dot.is-active { width: 22px; background: #fff; }
+@media (max-width: 720px) {
+  .work__stage .morph-slider-indicators { gap: 6px; bottom: 12px; }
+  .work__stage .morph-slider-dot { width: 6px; height: 6px; }
+}
+
+/* ---------- Botón "mantener presionado" del catálogo ---------- */
+.catalog .hold-button { font-weight: 600; min-width: min(330px, 100%); padding-inline: 30px; }
+.catalog .hold-button:focus-visible { outline-color: #fff; }
+@media (max-width: 640px) {
+  .catalog .hold-button { width: 100%; }
+}

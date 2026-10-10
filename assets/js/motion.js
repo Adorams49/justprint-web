@@ -71,22 +71,11 @@
     $$(".card").forEach(el => tilt(el, 5));
     $$(".tile").forEach(el => tilt(el, 3, -4));
     $$(".pager__a").forEach(el => tilt(el, 3, -4));
-    // las tarjetas de la galería se crean desde config.js: se buscan cuando ya existen
-    $$(".wcard").forEach(el => tilt(el, 7, -8));
   }
 
   if (typeof ScrollTrigger === "undefined") return;
 
   /* ---------- animaciones ligadas al scroll ---------- */
-  // Galería: las fotos suben escalonadas la primera vez que se ve la sección.
-  // (Movimiento vertical a propósito: un desplazamiento horizontal confunde al "imán" del carrusel.)
-  const wcards = $$(".wcard");
-  if (wcards.length) {
-    gsap.from(wcards, {
-      y: 60, opacity: 0, duration: 1.1, ease: "power3.out", stagger: .06,
-      scrollTrigger: { trigger: ".work__track", start: "top 85%", once: true }
-    });
-  }
   // Proceso: la foto se desplaza un poco más lento que la página (profundidad).
   if ($(".process__media")) {
     gsap.fromTo(".process__media", { yPercent: 5 }, {
