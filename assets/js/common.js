@@ -12,6 +12,40 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 document.documentElement.classList.remove("no-js");
 $$("[data-year]").forEach(e => { e.textContent = new Date().getFullYear(); });
 
+// En iPhone, :active solo se aplica si hay algún listener de toque: así la respuesta al presionar es inmediata.
+document.addEventListener("touchstart", () => {}, { passive: true });
+
+/* ---------- física al estilo de Apple (WWDC "Designing Fluid Interfaces") ----------
+   spring(): resorte con "respuesta" (segundos) y "amortiguación" (1 = sin rebote) que arranca
+   desde el valor actual y con la velocidad del gesto, así no hay salto entre arrastrar y animar.
+   Devuelve una función para detenerlo (si el usuario vuelve a agarrar el elemento). */
+function spring({ from, to, velocity = 0, response = .35, damping = 1, onUpdate, onDone }) {
+  const k = Math.pow(2 * Math.PI / response, 2), c = 4 * Math.PI * damping / response;
+  let x = from, v = velocity, last = performance.now(), raf = 0, stopped = false;
+  (function step(now) {
+    if (stopped) return;
+    let dt = Math.min(.064, (now - last) / 1000); last = now;
+    while (dt > 0) {                       // pasos pequeños: estable aunque un cuadro llegue tarde
+      const h = Math.min(dt, 1 / 240);
+      v += (-k * (x - to) - c * v) * h; x += v * h; dt -= h;
+    }
+    if (Math.abs(x - to) < .4 && Math.abs(v) < 8) { onUpdate(to); if (onDone) onDone(); return; }
+    onUpdate(x); raf = requestAnimationFrame(step);
+  })(last);
+  return () => { stopped = true; cancelAnimationFrame(raf); };
+}
+// Hasta dónde llegaría algo lanzado a esta velocidad (px/s), igual que la desaceleración del scroll de iOS.
+const project = (velocity, rate = .998) => (velocity / 1000) * rate / (1 - rate);
+// Freno elástico en los bordes: mientras más se pasa, menos sigue al dedo.
+const rubberband = (over, dim, c = .55) => (over * dim * c) / (dim + c * Math.abs(over));
+// Velocidad (px/s) a partir de las últimas posiciones del puntero.
+function velocityOf(samples) {
+  const now = performance.now(), recent = samples.filter(s => now - s.t < 100);
+  if (recent.length < 2) return 0;
+  const a = recent[0], b = recent[recent.length - 1];
+  return b.t > a.t ? (b.v - a.v) / ((b.t - a.t) / 1000) : 0;
+}
+
 /* ---------- tema claro / oscuro ---------- */
 (function theme() {
   const root = document.documentElement;
@@ -48,17 +82,22 @@ $$("[data-year]").forEach(e => { e.textContent = new Date().getFullYear(); });
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
   if (!burger) return;
-  burger.addEventListener("click", () => {
-    const open = links.classList.toggle("is-open");
+  // Abierto: oscurece y bloquea la página de fondo (body.menu-open); se cierra tocando fuera o con Esc.
+  function setOpen(open) {
+    links.classList.toggle("is-open", open);
+    document.body.classList.toggle("menu-open", open);
     burger.setAttribute("aria-expanded", open);
     burger.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+  }
+  burger.addEventListener("click", () => setOpen(!links.classList.contains("is-open")));
+  links.addEventListener("click", e => { if (e.target.closest("a")) setOpen(false); });
+  document.addEventListener("click", e => {
+    if (links.classList.contains("is-open") && !e.target.closest("#nav")) setOpen(false);
   });
-  links.addEventListener("click", e => {
-    if (e.target.closest("a")) {
-      links.classList.remove("is-open");
-      burger.setAttribute("aria-expanded", "false");
-    }
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && links.classList.contains("is-open")) { setOpen(false); burger.focus(); }
   });
+  window.matchMedia("(min-width: 821px)").addEventListener("change", e => { if (e.matches) setOpen(false); });
 })();
 
 /* ---------- títulos que suben palabra por palabra ---------- */
