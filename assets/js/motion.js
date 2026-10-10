@@ -29,9 +29,8 @@
       toX(clamp((e.clientX - r.left - r.width / 2) * strength, -max, max));
       toY(clamp((e.clientY - r.top - r.height / 2) * strength, -max, max));
     });
-    el.addEventListener("pointerleave", () => {
-      gsap.to(el, { x: 0, y: 0, scale: 1, duration: .5, ease: "power3.out", overwrite: "auto" });
-    });
+    // regresar con los mismos quickTo: un gsap.to con overwrite los mataba y el efecto servía una sola vez
+    el.addEventListener("pointerleave", () => { toX(0); toY(0); gsap.to(el, { scale: 1, duration: .4, ease: "power3.out" }); });
     press(el, .96);
   }
 
@@ -50,7 +49,8 @@
     gsap.set(el, { transformPerspective: 900, transformOrigin: "center" });
     const rx = gsap.quickTo(el, "rotationX", { duration: .6, ease: "power3.out" });
     const ry = gsap.quickTo(el, "rotationY", { duration: .6, ease: "power3.out" });
-    el.addEventListener("pointerenter", () => gsap.to(el, { y: lift, duration: .5, ease: "power3.out", overwrite: "auto" }));
+    const toLift = gsap.quickTo(el, "y", { duration: .5, ease: "power3.out" });
+    el.addEventListener("pointerenter", () => toLift(lift));
     el.addEventListener("pointermove", e => {
       const r = el.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
@@ -60,8 +60,8 @@
       el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
     });
     el.addEventListener("pointerleave", () => {
-      rx(0); ry(0);
-      gsap.to(el, { y: 0, scale: 1, duration: .7, ease: "power3.out", overwrite: "auto" });
+      rx(0); ry(0); toLift(0);
+      gsap.to(el, { scale: 1, duration: .5, ease: "power3.out" });
     });
     press(el);
   }

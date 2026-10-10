@@ -20,7 +20,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css?v=202610101651"><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://justprinthn.com/"}, {"@type": "ListItem", "position": 2, "name": "Servicios", "item": "https://justprinthn.com/#servicios"}, {"@type": "ListItem", "position": 3, "name": "Letras encajueladas", "item": "https://justprinthn.com/servicios/letras.html"}]}, {"@type": "Service", "name": "Letras encajueladas", "description": "Tu marca con volumen y con luz. Se caracterizan por realzar tus logotipos, marcas y letras con volumen. Su fabricación se realiza por corte láser o…", "areaServed": {"@type": "Country", "name": "Honduras"}, "provider": {"@type": "Organization", "name": "Just Print", "url": "https://justprinthn.com/"}}]}</script>
+  <link rel="stylesheet" href="../assets/css/style.css?v=202610101717">
+  <link rel="stylesheet" href="../assets/islands/islands.css?v=202610101717"><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://justprinthn.com/"}, {"@type": "ListItem", "position": 2, "name": "Servicios", "item": "https://justprinthn.com/#servicios"}, {"@type": "ListItem", "position": 3, "name": "Letras encajueladas", "item": "https://justprinthn.com/servicios/letras.html"}]}, {"@type": "Service", "name": "Letras encajueladas", "description": "Tu marca con volumen y con luz. Se caracterizan por realzar tus logotipos, marcas y letras con volumen. Su fabricación se realiza por corte láser o…", "areaServed": {"@type": "Country", "name": "Honduras"}, "provider": {"@type": "Organization", "name": "Just Print", "url": "https://justprinthn.com/"}}]}</script>
 </head>
 <body>
 <a class="skip" href="#contenido">Saltar al contenido</a>
@@ -116,7 +117,9 @@
       <header class="section__head">
         <h2 class="h2 reveal">Otros servicios</h2>
       </header>
-      <div class="grid grid--3">
+      <!-- Depth Carousel (React Bits) con los demás servicios. Sin JS quedan las tarjetas. -->
+      <div class="depth-wrap" data-island="depth" data-current="letras">
+        <div class="grid grid--3">
       <a class="card reveal" style="--accent:#17a2a2;--d:0.00s" href="muebleria.html">
         <span class="card__img">
           <img src="../assets/img/c-muebleria.webp" alt="Mueblería" loading="lazy">
@@ -156,6 +159,7 @@
           <span class="card__plus" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
         </span>
       </a>
+        </div>
       </div>
     </div>
   </section>
@@ -223,11 +227,12 @@
   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
-<script src="../assets/js/config.js?v=202610101651"></script>
-<script src="../assets/js/data.js?v=202610101651"></script>
-<script src="../assets/js/common.js?v=202610101651"></script>
+<script src="../assets/js/config.js?v=202610101717"></script>
+<script src="../assets/js/data.js?v=202610101717"></script>
+<script src="../assets/js/common.js?v=202610101717"></script>
 <script src="../assets/vendor/gsap/gsap.min.js"></script>
 <script src="../assets/vendor/gsap/ScrollTrigger.min.js"></script>
-<script src="../assets/js/motion.js?v=202610101651"></script>
+<script src="../assets/js/motion.js?v=202610101717"></script>
+<script type="module" src="../assets/islands/islands.js?v=202610101717"></script>
 </body>
 </html>

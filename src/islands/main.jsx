@@ -9,7 +9,6 @@
 import { Component, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import InfiniteSpiral from './reactbits/InfiniteSpiral.jsx';
 import CircularCarousel from './reactbits/CircularCarousel.jsx';
 import MorphSlider from './reactbits/MorphSlider.jsx';
 import HoldButton from './reactbits/HoldButton.jsx';
@@ -48,33 +47,6 @@ function mount(name, render) {
   });
 }
 
-/* ---------- Inicio: espiral infinita con los 12 servicios ----------
-   En táctil solo gira sola (arrastrarla bloquearía el scroll de la página);
-   con mouse también se arrastra y acompaña al scroll. */
-mount('spiral', () => (
-  <InfiniteSpiral
-    items={services.map(s => ({
-      id: s.id,
-      src: `assets/img/t-${s.img}.webp`,
-      alt: s.title,
-      label: `${s.title}: ver servicio`,
-      href: `servicios/${s.id}.html`
-    }))}
-    animationMode={finePointer ? 'all' : 'auto'}
-    speed={0.32}
-    radius={210}
-    cardWidth={132}
-    cardHeight={205}
-    verticalSpacing={62}
-    cardsPerTurn={8}
-    centerScale={1.12}
-    cardRadius={14}
-    edgeFade={0.38}
-    edgeBlur={4}
-    perspective={1100}
-    ariaLabel="Nuestros servicios en espiral"
-  />
-));
 
 /* ---------- Servicios: carrusel circular ----------
    Tocar una foto de atrás la trae al frente; tocar la del frente (o Enter) abre el detalle. */

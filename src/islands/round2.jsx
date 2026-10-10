@@ -17,6 +17,10 @@ import ScrollExpand from './reactbits/ScrollExpand.jsx';
 import MagnetLines from './reactbits/MagnetLines.jsx';
 import Crosshair from './reactbits/Crosshair.jsx';
 import JellyRadio from './reactbits/JellyRadio.jsx';
+import DepthCarousel from './reactbits/DepthCarousel.jsx';
+
+// raíz del sitio (islands.js vive en assets/islands/): sirve igual desde index.html y desde servicios/*.html
+const BASE = new URL('../../', import.meta.url).href;
 
 export function round2({ mount, services, gallery, finePointer }) {
   const svc = id => services.find(s => s.id === id) || {};
@@ -62,7 +66,6 @@ export function round2({ mount, services, gallery, finePointer }) {
                 labels={!narrow}
                 draggable={false}
                 speed={0.8}
-                align="left"
               />
             </span>
           ))}
@@ -96,7 +99,7 @@ export function round2({ mount, services, gallery, finePointer }) {
       <ShinyText
         text={el.textContent.trim()}
         color={onDark ? 'rgba(255,255,255,0.78)' : 'var(--blue-ink)'}
-        shineColor={onDark ? '#ffffff' : '#7cc8ee'}
+        shineColor={onDark ? '#ffffff' : '#062f5e'}
         speed={2.6}
         delay={1.5}
       />
@@ -170,7 +173,7 @@ export function round2({ mount, services, gallery, finePointer }) {
       startHeight={narrow ? 44 : 56}
       mediaZoom={1.2}
       scrollDistance={1}
-      overlayScrim={0.55}
+      overlayScrim={0.64}
     >
       <MeasureOverlay />
     </ScrollExpand>
@@ -213,9 +216,25 @@ export function round2({ mount, services, gallery, finePointer }) {
   /* ---------- Preguntas: líneas que siguen al cursor ---------- */
   if (finePointer) {
     mount('magnet', () => (
-      <MagnetLines rows={7} columns={11} containerSize="100%" lineColor="var(--magnet)" lineWidth="2px" lineHeight="20px" baseAngle={-10} />
+      <MagnetLines rows={20} columns={9} containerSize="100%" lineColor="var(--magnet)" lineWidth="2px" lineHeight="22px" baseAngle={-10} />
     ));
   }
+
+  /* ---------- Páginas de servicio: Depth Carousel con los demás servicios ---------- */
+  mount('depth', el => {
+    const others = services.filter(s => s.id !== el.dataset.current);
+    return (
+      <DepthCarousel
+        items={others.map(s => ({ image: `${BASE}assets/img/m-${s.img}.webp`, alt: s.title, title: s.title, href: `${BASE}servicios/${s.id}.html` }))}
+        cardWidth={narrow ? 230 : 300}
+        cardHeight={narrow ? 340 : 440}
+        radius={22}
+        tint="#041f40"
+        autoplay
+        autoplayDelay={3600}
+      />
+    );
+  });
 
   /* ---------- Pie: "desarrollado por" en círculo ---------- */
   mount('circular', () => <CircularText text="DESARROLLADO POR ✦ ARI RAMOS ✦ " spinDuration={22} onHover="speedUp" />);
@@ -235,6 +254,7 @@ export function round2({ mount, services, gallery, finePointer }) {
         onChange={v => {
           setValue(v);
           const t = document.getElementById(v);
+          if (!t) { window.location.href = `${BASE}index.html#${v}`; return; }
           if (t) t.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
           history.replaceState(null, '', '#' + v);
         }}
